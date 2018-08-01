@@ -14,7 +14,7 @@ end
 if a == b || b == c || c == a
   puts :isosceles
 elsif a == b && b == c && c == a
-  puts :isosceles_and_equilateral
+  puts :isosceles_and_equilaterala
 else
   puts :not_isosceles
 end
