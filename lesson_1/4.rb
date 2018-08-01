@@ -18,4 +18,4 @@ else
   exit
 end
 
-puts "#{x_1.to_i} ; #{x_2.to_i}"
+puts "D = #{d} : x_1 = #{x_1} ;  x_2 = #{x_2}"
