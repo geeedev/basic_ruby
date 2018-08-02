@@ -15,5 +15,5 @@ elsif d == 0
   x = - (b / 2 * a)
   puts "D = #{d}; #{x}"
 else
-  puts :has_no_solution
+  puts "D = #{d}; no roots."
 end
