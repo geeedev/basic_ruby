@@ -12,8 +12,8 @@ if d > 0
   x_2 = -b - Math.sqrt(d) / 2 * a
   puts "D #{d}; #{x_1}, #{x_2}"
 elsif d == 0
-  x_1 = - (b / 2 * a)
-  puts "D = #{d}; #{x_1}"
+  x = - (b / 2 * a)
+  puts "D = #{d}; #{x}"
 else
   puts :has_no_solution
 end
