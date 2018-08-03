@@ -3,6 +3,10 @@ a = gets.to_f
 print "Enter height of triangle : "
 h = gets.to_f
 
-s = (a*h)/2
+if a != 0 && h != 0
+  s = (a*h)/2
+else
+  puts "error"
+end
 
-puts s.to_f
+puts s
