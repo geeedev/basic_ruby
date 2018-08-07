@@ -1,3 +1,9 @@
 arr = ["a", "e", "o", "u", "i"]
+hash = {}
 
-("a".."z").each_with_index {|char, index| puts "#{char} - #{index + 1}" if (arr).include?(char)}
+("a".."z").each_with_index do |char, index|
+  if (arr).include?(char)
+    hash[char] = index + 1
+  end
+end
+puts hash
