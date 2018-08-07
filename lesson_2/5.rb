@@ -20,11 +20,11 @@ a = 0
     months[:february] = 29
   end
 
-  if (1..months.to_a[month - 1][1]).include?(day) && (1..12).include?(month)
-    (month - 2).downto(0) do |i|
-      a += months.to_a[i][1]
-    end
-     puts a + day
+  if (1..12).include?(month) && (1..months.values.to_a[month - 1]).include?(month)
+      arr = []
+      months.each_value {| key | arr << key if arr.size != month - 1}
+      arr.each {|i| a += i}
+      puts a += day
    else
      puts "data error"
      exit
