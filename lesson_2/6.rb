@@ -1,25 +1,21 @@
-
 hash = {}
+sum = 0
 
 loop do
-  print "Введите название товара: "
+  print "Enter product name: "
   name = gets.chomp
   break if name == "stop"
-  print "Цена за единицу: "
-  num = gets.to_i
-  print "Количество купленного товара: "
-  num1 = gets.to_f
-
-  hash1 = {}
-  hash1[num] = num1
-  hash[name] = hash1
+  print "Enter unit price: "
+  price = gets.to_f
+  print "Enter quantity: "
+  quantity = gets.to_f
+  price_quantity = { price: price, quantity: quantity }
+  hash [product_name: name] = price_quantity
 end
 
-a = 0
-hash.each do | k, v |
-  v.each do | kk, vv |
-    puts "#{k} - #{kk * vv} р."
-    a += kk * vv
-  end
+hash.each do |name, value|
+  puts "#{name[:product_name]} - #{value[:price] * value[:quantity]}"
+  sum += value[:price] * value[:quantity]
 end
-puts "Сумма: #{a} р."
+
+puts sum
