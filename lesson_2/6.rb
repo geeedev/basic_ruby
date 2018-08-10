@@ -10,12 +10,12 @@ loop do
   print "Enter quantity: "
   quantity = gets.to_f
   price_quantity = { price: price, quantity: quantity }
-  hash [product_name: name] = price_quantity
+  hash[name] = price_quantity
 end
 
 hash.each do |name, value|
-  puts "#{name[:product_name]} - #{value[:price] * value[:quantity]}"
+  puts "#{name} : #{value[:price] * value[:quantity]}"
   sum += value[:price] * value[:quantity]
 end
 
-puts sum
+puts "Итог: #{sum} р."
