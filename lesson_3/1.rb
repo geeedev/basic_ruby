@@ -4,7 +4,6 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    @selected_trains = []
   end
 
   def add_train(train)
