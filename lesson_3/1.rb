@@ -25,16 +25,19 @@ class Route
   attr_accessor :stations
 
   def initialize(starting_station, end_station)
-    @stations = [starting_station.name, end_station.name]
+    @stations = [starting_station, end_station]
   end
 
   def add_station(new_station)
-    @stations << new_station.name
-    @stations[-1], @stations[-2] = @stations[-2], @stations[-1]
+    @stations.insert(-2, new_station)
   end
 
-  def delete_station(name)
-    @stations.delete(name)
+  def show_route
+    @stations.each { |st| puts st.name }
+  end
+
+  def delete_station(name_station)
+      @stations.delete_if { |st| st.name if st.name == name_station }
   end
 end
 
