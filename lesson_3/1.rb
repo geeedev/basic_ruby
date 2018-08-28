@@ -1,82 +1,60 @@
 class Station
-attr_reader :name
+  attr_reader :name
 
   def initialize(name)
     @name = name
-    @arr = []
+    @trains = []
+    @selected_trains = []
   end
 
-  def add_train(tr)
-    @arr << tr
+  def add_train(train)
+    @trains << train
   end
 
-  def show_trains
-    puts @arr.map {|i| "#{i.train_number}; #{i.type}; #{i.num_of_wagons}"}
-  end
-
-  def freight_trains
-    @arr.map {|i| "#{i.train_number}; #{i.type}; #{i.num_of_wagons}"}.each {|i| puts i if i.include?("freight")}
-  end
-
-  def pass_trains
-    @arr.map {|i| "#{i.train_number}; #{i.type}; #{i.num_of_wagons}"}.each {|i| puts i if i.include?("pass")}
-  end
-
-  def del_train(index)
-    @arr.delete_at(index)
+  def show_trains(type = nil)
+    selected_trains =
+      if ['passenger', 'freight'].include?(type)
+        @trains.select { |t| t.type == type }
+      else
+        @trains
+      end
+    selected_trains.each {|tr| puts "#{tr.train_number}, #{tr.type}, #{tr.wagons_quantity}"}
   end
 end
 
 class Route
-  attr_reader :starting_station, :end_station
+  attr_accessor :stations
 
   def initialize(starting_station, end_station)
-    @starting_station = starting_station
-    @end_station = end_station
-    @arr = [starting_station, end_station]
+    @stations = [starting_station.name, end_station.name]
   end
 
-  def show_st
-    puts @arr.map {|st| st.name}
+  def add_station(new_station)
+    @stations << new_station.name
+    @stations[-1], @stations[-2] = @stations[-2], @stations[-1]
   end
 
-  def add_st(new_station)
-    @arr.delete_at(-1)
-    @arr << new_station
-    @arr << @end_station
+  def delete_station(name)
+    @stations.delete(name)
   end
-
-  def del_st(index)
-    @arr.delete_at(index)
-  end
-
 end
 
 class Train
-  attr_reader :train_number, :type, :num_of_wagons, :speed
+  attr_reader :train_number, :type, :wagons_quantity
+  attr_accessor :speed
 
-  def initialize(train_number, type, num_of_wagons)
+  def initialize(train_number, type, wagons_quantity)
     @train_number = train_number
     @type = type
-    @num_of_wagons = num_of_wagons
-    @speed = 0
-    @arr = []
-  end
-
-  def speed_up
-    @speed += 50
-  end
-
-  def stop
+    @wagons_quantity = wagons_quantity
     @speed = 0
   end
 
-  def add_wagon
-    @num_of_wagons += 1 if @speed == 0
+  def wagon(type)
+    if type = "-" && @wagons_quantity != 0
+      @wagons_quantity -= 1 if @speed == 0
+    elsif type = "+" && @speed == 0
+      @wagons_quantity += 1 if @speed == 0
+    end
   end
-
-  def delete_wagon
-    @num_of_wagons -= 1 if @speed == 0
-  end
-
 end
