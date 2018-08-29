@@ -1,5 +1,6 @@
 class Station
   attr_reader :name
+  attr_accessor :trains
 
   def initialize(name)
     @name = name
@@ -42,7 +43,7 @@ class Route
 end
 
 class Train
-  attr_reader :train_number, :type, :wagons_quantity
+  attr_reader :train_number, :type, :wagons_quantity, :train_route
   attr_accessor :speed
 
   def initialize(train_number, type, wagons_quantity)
@@ -50,6 +51,14 @@ class Train
     @type = type
     @wagons_quantity = wagons_quantity
     @speed = 0
+    @train_route = []
+    @current_station
+  end
+
+  def add_route(ro)
+    @train_route += ro.stations
+    @train_route[0].trains << self
+    @current_station = @train_route[0]
   end
 
   def wagon(type)
