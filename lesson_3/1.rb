@@ -32,17 +32,17 @@ class Route
     @stations.insert(-2, new_station)
   end
 
-  def show_route
+  def display
     @stations.each { |st| puts st.name }
   end
 
-  def delete_station(name_station)
-      @stations.delete_if { |st| st.name if st.name == name_station }
+  def delete_station(station_name)
+      @stations.delete_if { |st| st.name if st.name == station_name }
   end
 end
 
 class Train
-  attr_reader :train_number, :type, :wagons_quantity, :stations, :current_station, :next_station, :previous_station
+  attr_reader :wagons_quantity, :type, :train_number
   attr_accessor :speed
 
   def initialize(train_number, type, wagons_quantity)
@@ -50,38 +50,39 @@ class Train
     @type = type
     @wagons_quantity = wagons_quantity
     @speed = 0
-    @stations = []
   end
 
   def add_route(route)
-    route.stations.each { |st| @stations << st }
-    @current_station = @stations[0]
-    @current_station.trains << self
+    @route = route
+    @route.stations[0].trains << self
+    @curret_station_index = 0
   end
 
-  def send(command = 'next')
-    @next_station_index = @stations.index(@current_station) + 1 #1
-    @previous_station_index = @stations.index(@current_station) - 1
+  def to_next_station
+    next_station_index = @curret_station_index + 1
 
-      if command == 'next' && @next_station_index < @stations.index(@stations.last) - 1
-        @next_station = @stations[@next_station_index]
-        @current_station.trains.delete(self)
-        @next_station.trains << self
-        @current_station = @next_station
-      elsif command == 'previous' && @previous_station_index > 0
-        @previous_station_index = @stations.index(@current_station) - 1
-        @previous_station = @stations[@previous_station_index]
-        @current_station.trains.delete(self)
-        @previous_station.trains << self
-        @current_station = @previous_station
-      end
-  end
-
-  def wagon(type)
-    if type = "-" && @wagons_quantity != 0
-      @wagons_quantity -= 1 if @speed == 0
-    elsif type = "+" && @speed == 0
-      @wagons_quantity += 1 if @speed == 0
+    if @curret_station_index < @route.stations.index(@route.stations.last)
+      @route.stations[@curret_station_index].trains.delete(self)
+      @route.stations[next_station_index].trains << self
+      @curret_station_index = next_station_index
     end
+  end
+
+  def to_previous_station
+    previous_station_index = @curret_station_index - 1
+
+    if @curret_station_index > 0
+      @route.stations[@curret_station_index].trains.delete(self)
+      @route.stations[previous_station_index].trains << self
+      @curret_station_index = previous_station_index
+    end
+  end
+
+  def add_wagon
+    @wagons_quantity += 1 if @speed == 0
+  end
+
+  def remove_wagon
+    @wagons_quantity -= 1 if @speed == 0 && @wagons_quantity != 0
   end
 end
