@@ -42,7 +42,7 @@ class Route
 end
 
 class Train
-  attr_reader :train_number, :type, :wagons_quantity, :stations, :current_station
+  attr_reader :train_number, :type, :wagons_quantity, :stations, :current_station, :next_station, :previous_station
   attr_accessor :speed
 
   def initialize(train_number, type, wagons_quantity)
@@ -56,7 +56,25 @@ class Train
   def add_route(route)
     route.stations.each { |st| @stations << st }
     @current_station = @stations[0]
-    @stations[0].trains << self
+    @current_station.trains << self
+  end
+
+  def send(command = 'next')
+    @next_station_index = @stations.index(@current_station) + 1 #1
+    @previous_station_index = @stations.index(@current_station) - 1
+
+      if command == 'next' && @next_station_index < @stations.index(@stations.last) - 1
+        @next_station = @stations[@next_station_index]
+        @current_station.trains.delete(self)
+        @next_station.trains << self
+        @current_station = @next_station
+      elsif command == 'previous' && @previous_station_index >= 0
+        @previous_station_index = @stations.index(@current_station) - 1
+        @previous_station = @stations[@previous_station_index]
+        @current_station.trains.delete(self)
+        @previous_station.trains << self
+        @current_station = @previous_station
+      end
   end
 
   def wagon(type)
