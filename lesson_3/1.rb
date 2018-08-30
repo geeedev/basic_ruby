@@ -68,7 +68,7 @@ class Train
         @current_station.trains.delete(self)
         @next_station.trains << self
         @current_station = @next_station
-      elsif command == 'previous' && @previous_station_index >= 0
+      elsif command == 'previous' && @previous_station_index > 0
         @previous_station_index = @stations.index(@current_station) - 1
         @previous_station = @stations[@previous_station_index]
         @current_station.trains.delete(self)
