@@ -63,6 +63,10 @@ class Train
     @speed += 50
   end
 
+  def stop
+    @speed = 0
+  end
+
   def add_route(route)
     @route = route
     route.stations[0].add_train(self)
