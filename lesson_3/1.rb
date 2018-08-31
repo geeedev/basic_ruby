@@ -58,27 +58,25 @@ class Train
 
   def add_route(route)
     @route = route
-    @route.stations[0].add_train(self)
+    self.route.stations[0].add_train(self)
     @curret_station_index = 0
   end
 
   def to_next_station
-    next_station_index = @curret_station_index + 1
-
-    if @curret_station_index < @route.stations.index(@route.stations.last)
-      @route.stations[@curret_station_index].remove_train(self)
-      @route.stations[next_station_index].add_train(self)
-      @curret_station_index = next_station_index
+    if current_station && next_station
+      current_station.remove_train(self)
+      next_station.add_train(self)
+      @curret_station_index += 1
+      current_station
     end
   end
 
   def to_previous_station
-    previous_station_index = @curret_station_index - 1
-
-    if @curret_station_index > 0
-      @route.stations[@curret_station_index].remove_train(self)
-      @route.stations[previous_station_index].add_train(self)
-      @curret_station_index = previous_station_index
+    if current_station && previous_station
+      current_station.remove_train(self)
+      previous_station.add_train(self)
+      @curret_station_index -= 1
+      current_station
     end
   end
 
@@ -87,11 +85,11 @@ class Train
   end
 
   def next_station
-    @route.stations[@curret_station_index + 1].name if @curret_station_index
+    @route.stations[@curret_station_index + 1] if @curret_station_index
   end
 
   def previous_station
-    if @curret_station_indexs && @curret_station_index > 0
+    if @curret_station_index && @curret_station_index > 0
       @route.stations[@curret_station_index - 1]
     end
   end
