@@ -41,13 +41,12 @@ class Route
   end
 
   def delete_station(station_name)
-      @stations.delete_if { |st| st.name if st.name == station_name }
+    @stations.delete_if { |st| st.name if st.name == station_name }
   end
 end
 
 class Train
-  attr_reader :wagons_quantity, :type, :train_number, :route
-  attr_accessor :speed
+  attr_reader :wagons_quantity, :type, :train_number, :route, :speed
 
   def initialize(train_number, type, wagons_quantity)
     @train_number = train_number
@@ -56,9 +55,17 @@ class Train
     @speed = 0
   end
 
+  def stopped?
+    @speed == 0
+  end
+
+  def up_speed
+    @speed += 50
+  end
+
   def add_route(route)
     @route = route
-    self.route.stations[0].add_train(self)
+    route.stations[0].add_train(self)
     @curret_station_index = 0
   end
 
@@ -95,10 +102,10 @@ class Train
   end
 
   def add_wagon
-    @wagons_quantity += 1 if @speed == 0
+    @wagons_quantity += 1 if stopped?
   end
 
   def remove_wagon
-    @wagons_quantity -= 1 if @speed == 0 && @wagons_quantity != 0
+    @wagons_quantity -= 1 if stopped? && @wagons_quantity > 0
   end
 end
