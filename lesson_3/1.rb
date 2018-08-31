@@ -10,7 +10,11 @@ class Station
     @trains << train
   end
 
-  def show_trains(type = nil)
+  def remove_train(train)
+    @trains.delete(train)
+  end
+
+  def display(type = nil)
     selected_trains =
       if ['passenger', 'freight'].include?(type)
         @trains.select { |t| t.type == type }
@@ -42,7 +46,7 @@ class Route
 end
 
 class Train
-  attr_reader :wagons_quantity, :type, :train_number
+  attr_reader :wagons_quantity, :type, :train_number, :route
   attr_accessor :speed
 
   def initialize(train_number, type, wagons_quantity)
@@ -54,7 +58,7 @@ class Train
 
   def add_route(route)
     @route = route
-    @route.stations[0].trains << self
+    @route.stations[0].add_train(self)
     @curret_station_index = 0
   end
 
@@ -62,8 +66,8 @@ class Train
     next_station_index = @curret_station_index + 1
 
     if @curret_station_index < @route.stations.index(@route.stations.last)
-      @route.stations[@curret_station_index].trains.delete(self)
-      @route.stations[next_station_index].trains << self
+      @route.stations[@curret_station_index].remove_train(self)
+      @route.stations[next_station_index].add_train(self)
       @curret_station_index = next_station_index
     end
   end
@@ -72,23 +76,23 @@ class Train
     previous_station_index = @curret_station_index - 1
 
     if @curret_station_index > 0
-      @route.stations[@curret_station_index].trains.delete(self)
-      @route.stations[previous_station_index].trains << self
+      @route.stations[@curret_station_index].remove_train(self)
+      @route.stations[previous_station_index].add_train(self)
       @curret_station_index = previous_station_index
     end
   end
 
   def current_station
-    @route.stations[@current_station_index] if @current_station_index
+    @route.stations[@curret_station_index] if @curret_station_index
   end
 
   def next_station
-      @route.stations[@current_station_index + 1] if @current_station_index
+    @route.stations[@curret_station_index + 1].name if @curret_station_index
   end
 
   def previous_station
-    if @current_station_index && @current_station_index > 0
-      @route.stations[@current_station_index - 1]
+    if @curret_station_indexs && @curret_station_index > 0
+      @route.stations[@curret_station_index - 1]
     end
   end
 
