@@ -78,6 +78,20 @@ class Train
     end
   end
 
+  def current_station
+    @route.stations[@current_station_index] if @current_station_index
+  end
+
+  def next_station
+      @route.stations[@current_station_index + 1] if @current_station_index
+  end
+
+  def previous_station
+    if @current_station_index && @current_station_index > 0
+      @route.stations[@current_station_index - 1]
+    end
+  end
+
   def add_wagon
     @wagons_quantity += 1 if @speed == 0
   end
