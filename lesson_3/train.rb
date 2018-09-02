@@ -1,50 +1,3 @@
-class Station
-  attr_reader :name, :trains
-
-  def initialize(name)
-    @name = name
-    @trains = []
-  end
-
-  def add_train(train)
-    @trains << train
-  end
-
-  def remove_train(train)
-    @trains.delete(train)
-  end
-
-  def display(type = nil)
-    selected_trains =
-      if ['passenger', 'freight'].include?(type)
-        @trains.select { |t| t.type == type }
-      else
-        @trains
-      end
-    selected_trains.each {|tr| puts "#{tr.train_number}, #{tr.type}, #{tr.wagons_quantity}"}
-  end
-end
-
-class Route
-  attr_accessor :stations
-
-  def initialize(starting_station, end_station)
-    @stations = [starting_station, end_station]
-  end
-
-  def add_station(new_station)
-    @stations.insert(-2, new_station)
-  end
-
-  def display
-    @stations.each { |st| puts st.name }
-  end
-
-  def delete_station(station_name)
-    @stations.delete_if { |st| st.name if st.name == station_name }
-  end
-end
-
 class Train
   attr_reader :wagons_quantity, :type, :train_number, :route, :speed
 
@@ -56,7 +9,7 @@ class Train
   end
 
   def stopped?
-    @speed == 0
+    @speed.zero?
   end
 
   def up_speed
