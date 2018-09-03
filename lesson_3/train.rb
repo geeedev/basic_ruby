@@ -7,20 +7,6 @@ class Train
     @wagons = []
   end
 
-  def stopped?
-    @speed.zero?
-  end
-
-  UP_SPEED_VALUE = 50
-
-  def up_speed
-    @speed += UP_SPEED_VALUE
-  end
-
-  def stop!
-    @speed = 0
-  end
-
   def add_route(route)
     @route = route
     route.stations[0].add_train(self)
@@ -57,6 +43,22 @@ class Train
     if @curret_station_index && @curret_station_index > 0
       @route.stations[@curret_station_index - 1]
     end
+  end
+
+  protected
+
+  def stopped?
+    @speed.zero?
+  end
+
+  UP_SPEED_VALUE = 50
+
+  def up_speed
+    @speed += UP_SPEED_VALUE
+  end
+
+  def stop!
+    @speed = 0
   end
 
   def add_wagon(wagon)
