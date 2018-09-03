@@ -1,5 +1,5 @@
 class Station
-  attr_reader :name
+  attr_reader :name, :trains
 
   def initialize(name)
     @name = name
@@ -8,19 +8,19 @@ class Station
 
   def display(type = nil)
     selected_trains =
-      if ['PassengerTrain', 'CargoTrain'].include?(type)
-        @trains.select { |t| t.сlass == type }
+      if ['passenger', 'cargo'].include?(type)
+        trains.select { |tr| tr.type == type}
       else
-        @trains
+        trains
       end
-    selected_trains.each {|tr| puts "#{tr.train_number}"}
+      puts selected_trains
   end
 
   def add_train(train)
-    @trains << train
+    trains << train
   end
 
   def remove_train(train)
-    @trains.delete(train)
+    trains.delete(train)
   end
 end
