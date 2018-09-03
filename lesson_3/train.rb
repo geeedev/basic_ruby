@@ -51,10 +51,10 @@ class Train
     @speed.zero?
   end
 
-  UP_SPEED_VALUE = 50
+  UP_SPEED_STEP = 50
 
   def up_speed
-    @speed += UP_SPEED_VALUE
+    @speed += UP_SPEED_STEP
   end
 
   def stop!

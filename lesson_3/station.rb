@@ -9,7 +9,7 @@ class Station
   def display(type = nil)
     selected_trains =
       if ['PassengerTrain', 'CargoTrain'].include?(type)
-        @trains.select { |t| t.slass == type }
+        @trains.select { |t| t.сlass == type }
       else
         @trains
       end
