@@ -5,12 +5,15 @@ require_relative 'cargo_train'
 require_relative 'passenger_train'
 require_relative 'cargo_wagon'
 require_relative 'passenger_wagon'
+require_relative 'interface/int'
 
-st1 = Station.new('Station 1')
-st2 = Station.new('Station 2')
-ro = Route.new(st1, st2)
-pass_tr = PassengerTrain.new(1)
-car_tr = CargoTrain.new(2)
-pass_tr.add_route(ro)
-car_tr.add_route(ro)
-st1.display
+int = Interface.new
+
+loop do
+  int.user = nil
+  int.main_menu
+  int.new_station if int.user == 1
+  int.new_train if int.user == 2
+  int.new_route if int.user == 3
+  return if int.user == 0
+end
