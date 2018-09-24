@@ -5,10 +5,11 @@ class Train
     @train_number = train_number
     @speed = 0
     @wagons = []
+    @route = []
   end
 
-  def add_route(route)
-    @route = route
+  def add_route(ro)
+    route = ro
     route.stations[0].add_train(self)
     @curret_station_index = 0
   end
@@ -45,8 +46,6 @@ class Train
     end
   end
 
-  protected
-
   def stopped?
     @speed.zero?
   end
@@ -62,10 +61,10 @@ class Train
   end
 
   def add_wagon(wagon)
-    @wagons << wagon if stopped?
+    wagons << wagon if stopped?
   end
 
-  def remove_wagon(wagon)
-    @wagons.delete(wagon) if stopped? && @wagons.include?(wagon)
+  def remove_wagon
+    wagons.delete_at(-1) if stopped?
   end
 end

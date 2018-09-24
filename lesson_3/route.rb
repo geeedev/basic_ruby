@@ -6,15 +6,18 @@ class Route
   end
 
   def display
-    stations.each { |st| puts st.name }
-    puts '===================='
+    stations.each_with_index {|station, index| puts "#{index + 1} - #{station.name}"}
   end
 
-  def delete_station(station_name)
-    stations.delete_if { |st| st.name if st.name == station_name }
+  def delete_station(station)
+    stations.delete(station)
   end
 
   def add_station(new_station)
-    stations.insert(-2, new_station)
+    if stations.include?(new_station)
+      puts 'станция уже есть в маршруте'
+    else
+      stations.insert(-2, new_station)
+    end
   end
 end

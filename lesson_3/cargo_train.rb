@@ -5,8 +5,12 @@ class CargoTrain < Train
     super
     @type = 'cargo'
   end
-  
+
   def add_wagon(wagon)
-    super if wagon.type == 'cargo'
+    if wagon.type == 'cargo'
+      super
+    else
+      puts 'error'
+    end
   end
 end

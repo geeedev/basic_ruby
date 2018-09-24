@@ -7,6 +7,10 @@ class PassengerTrain < Train
   end
 
   def add_wagon(wagon)
-    super if wagon.type == 'passenger'
+    if wagon.type == 'passenger'
+      super
+    else
+      puts 'error'
+    end
   end
 end
