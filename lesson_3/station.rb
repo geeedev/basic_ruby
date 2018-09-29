@@ -11,7 +11,7 @@ class Station
       if ['passenger', 'cargo'].include?(type)
         trains.select { |tr| tr.type == type}
       else
-        trains
+        puts trains
       end
       puts selected_trains
   end

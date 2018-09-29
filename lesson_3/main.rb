@@ -28,6 +28,7 @@ class Main
       remove_wagon_in_train if command == 8
       send_to_next_station if command == 9
       send_to_previous_station if command == 10
+      station_list if command == 11
       puts '======================================'
       command = get_main_user_command
     end
@@ -51,8 +52,9 @@ class Main
     6 - Add route in train
     7 - Add wagon in train
     8 - Remove wagon in train
-    9 - Send train to next station
-   10 - Send train to previous station
+    9 - To next station
+   10 - To previous station
+   11 - Station list
     0 - Exit
 
     MAIN_MANU
@@ -68,7 +70,7 @@ class Main
   end
 
   def create_train
-    ['cargo', 'passenger'].each_with_index {|type, index| puts "#{index + 1} - #{type}"}
+    ['cargo', 'passenger'].each_with_index { |type, index| puts "#{index + 1} - #{type}" }
     puts 'Enter train type index: '
     train_type_index = gets.to_i
     puts 'Enter train number'
@@ -160,6 +162,11 @@ class Main
     end
   end
 
+  def station_list
+    station = select_station
+    station.display
+  end
+
   def select_wagon_in_train(train)
     if train.wagons.empty?
       puts 'You have no wagons'
@@ -228,7 +235,6 @@ class Main
       puts 'Enter route index: '
       route_index = gets.to_i
       if route_index <= 0 || route_index > routes.size
-        puts "No route with number - #{route_index}"
       else
         routes[route_index - 1]
       end
@@ -239,10 +245,11 @@ class Main
     if stations.empty?
       puts 'You have no stations'
     else
-      stations.e`ach_with_index {|station, index| puts "#{index + 1} - #{station.name}"}
+      stations.each_with_index {|station, index| puts "#{index + 1} - #{station.name}"}
       puts 'Enter station index: '
       station_index = gets.to_i
       if station_index <= 0 || station_index > stations.size
+        puts "No route with number - #{route_index}"
         puts "No station with number - #{station_index}"
       else
         stations[station_index - 1]
@@ -252,5 +259,4 @@ class Main
 end
 
 main = Main.new
-
 main.run

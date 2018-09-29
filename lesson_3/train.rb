@@ -67,4 +67,4 @@ class Train
   def remove_wagon
     wagons.delete_at(-1) if stopped?
   end
-end
+endj
